@@ -2,6 +2,7 @@ package com.example.hrdepartmentbase.Controllers;
 
 
 import com.example.hrdepartmentbase.Models.AdressOfDepartment;
+import com.example.hrdepartmentbase.Models.Department;
 import com.example.hrdepartmentbase.Models.Post;
 import com.example.hrdepartmentbase.Repository.AdressOfDepartmentRepository;
 import com.example.hrdepartmentbase.Repository.PostRepository;
@@ -10,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -29,10 +31,24 @@ public class AdressOfDepartmentController {
         return  adressOfDepartments;
     }
 
+    @GetMapping(value = "getAdressOfDepartmentById/{id}")
+    public Optional<AdressOfDepartment> getAdressOfDepartmentById(@PathVariable Long id){
+
+        Optional<AdressOfDepartment> adressOfDepartment = adressOfDepartmentRepository.findById(id);
+        return  adressOfDepartment;
+    }
+
     @PostMapping(value = "createAdressOfDepartments")
     public void createAdressOfDepartments(@RequestBody AdressOfDepartment adressOfDepartment){
 
         adressOfDepartmentRepository.save(adressOfDepartment);
         logger.info("All records saved.");
+    }
+
+    @DeleteMapping(value = "deleteAdressOfDepartment/{id}")
+    public void deleteAdressOfDepartment(@PathVariable Long id){
+        adressOfDepartmentRepository.deleteDepartmentsByAdressOfDepartment_Id(id);
+        adressOfDepartmentRepository.deleteById(id);
+        logger.info("Department delete.");
     }
 }
