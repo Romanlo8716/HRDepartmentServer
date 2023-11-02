@@ -88,6 +88,7 @@ public class WorkerController {
 
  @DeleteMapping(value = "deleteWorker/{id}")
     public void deleteWorker(@PathVariable ("id") Long id, @RequestBody Worker worker){
+        workerRepository.deleteDepartmentsAndPostsOfWorkerByWorkerId(id);
        workerRepository.deleteById(id);
  }
 

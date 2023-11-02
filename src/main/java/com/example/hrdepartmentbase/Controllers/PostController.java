@@ -17,6 +17,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "*")
@@ -37,6 +38,13 @@ public class PostController {
         return  posts;
     }
 
+    @GetMapping(value = "getPostById/{id}")
+    public Optional<Post> getPostById(@PathVariable("id") Long id){
+        Optional<Post> post = postRepository.findById(id);
+
+        return post;
+    }
+
     @PostMapping(value = "createPosts")
     public void createPosts(@RequestBody Post post){
 
@@ -46,6 +54,7 @@ public class PostController {
 
     @DeleteMapping(value = "deletePost/{id}")
     public void deletePost(@PathVariable ("id") Long id){
+        postRepository.deleteDepartmentsAndPostsOfWorkersByPost_Id(id);
         postRepository.deleteById(id);
     }
 
