@@ -1,6 +1,5 @@
 package com.example.hrdepartmentbase.Controllers;
 
-import com.example.hrdepartmentbase.Models.ViewModels.DescriptionWorker;
 import com.example.hrdepartmentbase.Models.Worker;
 import com.example.hrdepartmentbase.Repository.WorkerRepository;
 import com.example.hrdepartmentbase.Services.WorkerService;

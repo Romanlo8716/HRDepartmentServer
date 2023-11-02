@@ -6,6 +6,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
+import org.hibernate.engine.internal.Cascade;
+
 import java.util.List;
 
 @Data
@@ -28,6 +30,11 @@ public class Department {
     @ManyToOne
     //@JoinColumn
     private AdressOfDepartment adressOfDepartment;
+
+//    @OneToMany(mappedBy = "department",cascade = CascadeType.ALL)
+//    private List<DepartmentsAndPostsOfWorker> departmentsAndPostsOfWorkers;
+
+
 
 
 

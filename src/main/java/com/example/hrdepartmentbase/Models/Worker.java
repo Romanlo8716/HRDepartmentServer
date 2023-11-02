@@ -55,7 +55,7 @@ public class Worker {
  @Column(nullable = false)
     private int countChildren;
 
- @Column(length = 20, nullable = true)
+ @Column(length = 50, nullable = true)
  @Email(message = "Неверный емайл адрес!")
     private String email;
 
@@ -100,7 +100,6 @@ public class Worker {
     private int stockCategory;
 
  @Column(length = 30)
- @Pattern(regexp = "^[А-ЯЁ]{1}[а-яё ]+$", message = "Некорректный состав!")
     private String profile;
 
  @Column(length = 50)
@@ -115,10 +114,6 @@ public class Worker {
 
     private boolean dismiss;
 
-   @ManyToMany(cascade = CascadeType.ALL)
-  private List<Department> departments;
 
-   @ManyToMany(cascade = CascadeType.ALL)
- private List<Post> posts;
 
 }

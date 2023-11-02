@@ -1,6 +1,5 @@
 package com.example.hrdepartmentbase.Repository;
 
-import com.example.hrdepartmentbase.Models.ViewModels.DescriptionWorker;
 import com.example.hrdepartmentbase.Models.Worker;
 import jdk.dynalink.linker.LinkerServices;
 import org.springframework.data.jpa.repository.JpaRepository;

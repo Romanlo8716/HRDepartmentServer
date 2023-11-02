@@ -1,7 +1,6 @@
 package com.example.hrdepartmentbase.Controllers;
 
 import com.example.hrdepartmentbase.Models.*;
-import com.example.hrdepartmentbase.Models.ViewModels.DescriptionWorker;
 import com.example.hrdepartmentbase.Repository.DescriptionWorkerRepository;
 import com.example.hrdepartmentbase.Repository.WorkerRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;

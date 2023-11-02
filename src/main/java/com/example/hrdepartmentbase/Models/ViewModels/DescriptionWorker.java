@@ -1,6 +1,5 @@
 package com.example.hrdepartmentbase.Models.ViewModels;
 
-
 import com.example.hrdepartmentbase.Models.*;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -12,7 +11,6 @@ import java.util.List;
 
 @Data
 @Entity
-
 public class DescriptionWorker {
 
     @Id
@@ -35,7 +33,5 @@ public class DescriptionWorker {
 
     @OneToMany
     private List<DepartmentsAndPostsOfWorker> departmentsAndPostsOfWorkers;
-
-
 
 }

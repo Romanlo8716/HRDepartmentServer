@@ -45,5 +45,12 @@ public class DepartmentController {
         logger.info("All records saved.");
     }
 
+    @DeleteMapping(value = "deleteDepartment/{id}")
+    public void deleteDepartment(@PathVariable Long id){
+        departmentRepository.deleteDepartmentsAndPostsOfWorkersByDepartment_Id(id);
+        departmentRepository.deleteById(id);
+        logger.info("Department delete.");
+    }
+
 
 }
