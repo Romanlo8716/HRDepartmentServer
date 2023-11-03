@@ -21,4 +21,6 @@ public interface WorkerRepository extends CrudRepository<Worker, Long> {
   void deleteDepartmentsAndPostsOfWorkerByWorkerId(@Param("id") Long id);
 
 
+  @Query("select w1_0 from Worker w1_0 where w1_0.dismiss=true")
+  Iterable<Worker> getDissmised();
 }

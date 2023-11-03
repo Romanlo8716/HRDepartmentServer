@@ -1,52 +1,115 @@
 package com.example.hrdepartmentbase.Services;
 
+import com.example.hrdepartmentbase.Models.DepartmentsAndPostsOfWorker;
 import com.example.hrdepartmentbase.Models.Worker;
+import com.example.hrdepartmentbase.Repository.DepartmentsAndPostsOfWorkerRepository;
+import com.example.hrdepartmentbase.Repository.WorkerRepository;
+import org.springframework.expression.ExpressionException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.*;
 
 @Service
 public class WorkerServiceImpl implements WorkerService {
 
-    private static final Map<Integer, Worker> WORKER_REPOSITORY_MAP = new HashMap<>();
+    private WorkerRepository workerRepository;
+    private DepartmentsAndPostsOfWorkerRepository departmentsAndPostsOfWorkerRepository;
 
-    private static final AtomicInteger WORKER_ID_HOLDER = new AtomicInteger();
-
-
-    @Override
-    public void create(Worker worker) {
-        final int workerId = WORKER_ID_HOLDER.incrementAndGet();
-        worker.setId(workerId);
-        WORKER_REPOSITORY_MAP.put(workerId, worker);
+    public WorkerServiceImpl(WorkerRepository workerRepository, DepartmentsAndPostsOfWorkerRepository departmentsAndPostsOfWorkerRepository) {
+        this.workerRepository = workerRepository;
+        this.departmentsAndPostsOfWorkerRepository = departmentsAndPostsOfWorkerRepository;
     }
 
     @Override
-    public List<Worker> readAll() {
-        return new ArrayList<>(WORKER_REPOSITORY_MAP.values());
-    }
+    public List<Worker> getCandidates() {
 
-    @Override
-    public Worker readById(int id) {
-        return WORKER_REPOSITORY_MAP.get(id);
-    }
+        List<Worker> candidates = new ArrayList<>();
+        boolean flag = false;
+        for(Worker worker : workerRepository.findAll()){
+            flag = false;
+            for (DepartmentsAndPostsOfWorker departmentsAndPostsOfWorker : departmentsAndPostsOfWorkerRepository.findAll()){
+                if(worker.getId()==departmentsAndPostsOfWorker.getWorker().getId()){
+                    flag = true;
+                    break;
+                }
 
-    @Override
-    public boolean update(Worker worker, int id) {
-        if(WORKER_REPOSITORY_MAP.containsKey(id)){
-            worker.setId(id);
-            WORKER_REPOSITORY_MAP.put(id, worker);
-            return true;
+            }
+            if(flag==false && worker.isDismiss()==false){
+                candidates.add(worker);
+            }
         }
-        return  false;
 
+        return candidates;
     }
 
     @Override
-    public boolean delete(int id) {
-        return WORKER_REPOSITORY_MAP.remove(id) != null;
+    public List<Worker> getWorkersOnCompany() {
+
+        List<Worker> workers = new ArrayList<>();
+        boolean flag = false;
+        for(Worker worker : workerRepository.findAll()){
+            flag = false;
+            for (DepartmentsAndPostsOfWorker departmentsAndPostsOfWorker : departmentsAndPostsOfWorkerRepository.findAll()){
+                if(worker.getId()==departmentsAndPostsOfWorker.getWorker().getId()){
+                    flag = true;
+                    break;
+                }
+
+            }
+            if(flag==true && worker.isDismiss()==false){
+                workers.add(worker);
+            }
+        }
+
+        return workers;
+    }
+
+    @Override
+    public Iterable<Worker> getDissmised(){
+        return workerRepository.getDissmised();
+    }
+
+    @Override
+    public void createWorker(Worker worker) {
+          workerRepository.save(worker);
+    }
+
+    @Override
+    public Iterable<Worker> getWorker() {
+        Iterable<Worker> workers = workerRepository.findAll();
+
+        return workers;
+    }
+
+    @Override
+    public Optional<Worker> getWorkerById(Long id) {
+
+        Optional<Worker> worker = workerRepository.findById(id);
+
+        return worker;
+    }
+
+    @Override
+    public List<Worker> getByName(String name) {
+
+        List<Worker> workers = workerRepository.findAllByName(name);
+
+        return workers;
+    }
+
+    @Override
+    public Worker putWorker(Long id, Worker worker) {
+
+        Worker workerUpdate = workerRepository.findById(id).orElseThrow(() -> new ExpressionException("Worker not exist with id: " + id));
+
+        workerUpdate.setName(worker.getName());
+
+        return workerRepository.save(worker);
+    }
+
+    @Override
+    public void deleteWorker(Long id) {
+          workerRepository.deleteDepartmentsAndPostsOfWorkerByWorkerId(id);
+          workerRepository.deleteById(id);
     }
 }

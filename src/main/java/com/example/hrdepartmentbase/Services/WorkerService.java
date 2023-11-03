@@ -3,16 +3,26 @@ package com.example.hrdepartmentbase.Services;
 import com.example.hrdepartmentbase.Models.Worker;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface WorkerService {
 
-    void create(Worker worker);
+   List<Worker> getCandidates();
 
-    List<Worker> readAll();
+   List<Worker> getWorkersOnCompany();
 
-    Worker readById(int id);
+   Iterable<Worker> getDissmised();
 
-    boolean update(Worker worker, int id);
+   void createWorker(Worker worker);
 
-    boolean delete(int id);
+   Iterable<Worker> getWorker();
+
+   Optional<Worker> getWorkerById(Long id);
+
+   List<Worker> getByName(String name);
+
+   Worker putWorker(Long id, Worker worker);
+
+   void deleteWorker(Long id);
+
 }

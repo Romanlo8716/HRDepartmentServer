@@ -1,8 +1,10 @@
 package com.example.hrdepartmentbase.Controllers;
 
+import com.example.hrdepartmentbase.Models.DepartmentsAndPostsOfWorker;
 import com.example.hrdepartmentbase.Models.Worker;
 import com.example.hrdepartmentbase.Repository.WorkerRepository;
 import com.example.hrdepartmentbase.Services.WorkerService;
+import com.example.hrdepartmentbase.Services.WorkerServiceImpl;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
@@ -31,19 +33,19 @@ import java.util.stream.Collectors;
 public class WorkerController {
 
     private final static Logger logger = LoggerFactory.getLogger(WorkerController.class);
-    private WorkerRepository workerRepository;
+    private WorkerServiceImpl workerService;
 
     @Autowired
-    public WorkerController(WorkerRepository workerRepository) {
-        this.workerRepository = workerRepository;
+    public WorkerController(WorkerServiceImpl workerService) {
+        this.workerService = workerService;
     }
-    ObjectMapper objectMapper = new ObjectMapper();
+
 
 
     @PostMapping(value = "createWorkers")
  public void post(@RequestBody Worker worker){
 
-        workerRepository.save(worker);
+        workerService.createWorker(worker);
         logger.info("All records saved.");
  }
 
@@ -51,45 +53,50 @@ public class WorkerController {
     @GetMapping(value = "getWorkers")
  public Iterable<Worker> get(){
 
-       Iterable<Worker> workers = new ArrayList<>();
-       workers = workerRepository.findAll();
-       return  workers;
+
+       return workerService.getWorker();
  }
 
  @GetMapping(value = "/getWorkerById/{id}")
     public Optional<Worker> getById(@PathVariable("id") Long id){
-        Optional<Worker> workers = null;
 
-        workers = workerRepository.findById(id);
-
-     return workers;
+     return workerService.getWorkerById(id);
  }
 
 
 
  @GetMapping(value = "/findByName/{name}")
  public List<Worker> getByName(@PathVariable("name") String name){
-        List<Worker> workers = workerRepository.findAllByName(name);
-        return  workers;
+
+        return workerService.getByName(name);
  }
 
+ @GetMapping(value = "/getCandidates")
+ public List<Worker> getCandidates(){
+        return workerService.getCandidates();
+ }
 
+    @GetMapping(value = "/getWorkersOnCompany")
+    public List<Worker> getWorkersOnCompany(){
+        return workerService.getWorkersOnCompany();
+    }
 
+    @GetMapping(value = "/getDissmised")
+    public Iterable<Worker> getDissmised(){
+        return workerService.getDissmised();
+    }
 
  @PutMapping(value = "putWorker/{id}")
     public Worker putWorker(@PathVariable("id") Long id, @RequestBody Worker worker){
 
-        Worker workerUpdate = workerRepository.findById(id).orElseThrow(() -> new ExpressionException("Worker not exist with id: " + id));
 
-        workerUpdate.setName(worker.getName());
 
-        return workerRepository.save(worker);
+        return workerService.putWorker(id, worker);
  }
 
  @DeleteMapping(value = "deleteWorker/{id}")
-    public void deleteWorker(@PathVariable ("id") Long id, @RequestBody Worker worker){
-        workerRepository.deleteDepartmentsAndPostsOfWorkerByWorkerId(id);
-       workerRepository.deleteById(id);
+    public void deleteWorker(@PathVariable ("id") Long id){
+        workerService.deleteWorker(id);
  }
 
 }
