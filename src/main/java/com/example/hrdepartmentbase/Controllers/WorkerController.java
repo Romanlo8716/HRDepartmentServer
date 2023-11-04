@@ -99,4 +99,16 @@ public class WorkerController {
         workerService.deleteWorker(id);
  }
 
+
+
+@PutMapping(value = "dismissWorker/{id}")
+public void dismissWorker(@PathVariable ("id") Long id){
+    workerService.dismissWorker(id);
+}
+
+    @PutMapping(value = "recoveryWorker/{id}")
+    public void recoveryWorker(@PathVariable ("id") Long id){
+        workerService.recoveryWorker(id);
+    }
+
 }

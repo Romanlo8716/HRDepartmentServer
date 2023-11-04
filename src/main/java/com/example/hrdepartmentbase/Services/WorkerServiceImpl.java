@@ -110,6 +110,28 @@ public class WorkerServiceImpl implements WorkerService {
     @Override
     public void deleteWorker(Long id) {
           workerRepository.deleteDepartmentsAndPostsOfWorkerByWorkerId(id);
+          workerRepository.deleteEducationWorker(id);
+          workerRepository.deleteVacationWorker(id);
+          workerRepository.deleteLaborBookWorker(id);
+          workerRepository.deleteMedicalBookWorker(id);
           workerRepository.deleteById(id);
+    }
+
+    @Override
+    public  void dismissWorker(Long id){
+        Worker worker = workerRepository.findById(id).orElseThrow(() -> new ExpressionException("Worker not exist with id: " + id));
+
+        worker.setDismiss(true);
+        workerRepository.deleteDepartmentsAndPostsOfWorkerByWorkerId(id);
+        workerRepository.save(worker);
+    }
+
+    @Override
+    public  void recoveryWorker(Long id){
+        Worker worker = workerRepository.findById(id).orElseThrow(() -> new ExpressionException("Worker not exist with id: " + id));
+
+        worker.setDismiss(false);
+
+        workerRepository.save(worker);
     }
 }

@@ -25,4 +25,8 @@ public interface WorkerService {
 
    void deleteWorker(Long id);
 
+   void dismissWorker(Long id);
+
+   void recoveryWorker(Long id);
+
 }
