@@ -6,6 +6,8 @@ import com.example.hrdepartmentbase.Models.Department;
 import com.example.hrdepartmentbase.Models.Post;
 import com.example.hrdepartmentbase.Repository.AdressOfDepartmentRepository;
 import com.example.hrdepartmentbase.Repository.PostRepository;
+import com.example.hrdepartmentbase.Services.AdressOfDepartmentService;
+import com.example.hrdepartmentbase.Services.AdressOfDepartmentServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -17,38 +19,39 @@ import java.util.Optional;
 @CrossOrigin(origins = "*")
 public class AdressOfDepartmentController {
     private final static Logger logger = LoggerFactory.getLogger(WorkerController.class);
-    private AdressOfDepartmentRepository adressOfDepartmentRepository;
+    private AdressOfDepartmentServiceImpl adressOfDepartmentService;
 
-    public AdressOfDepartmentController(AdressOfDepartmentRepository adressOfDepartmentRepository) {
-        this.adressOfDepartmentRepository = adressOfDepartmentRepository;
+    public AdressOfDepartmentController(AdressOfDepartmentServiceImpl adressOfDepartmentService) {
+        this.adressOfDepartmentService = adressOfDepartmentService;
     }
 
     @GetMapping(value = "getAdressOfDepartments")
     public Iterable<AdressOfDepartment> getAllAdressOfDepartments(){
 
-        Iterable<AdressOfDepartment> adressOfDepartments = new ArrayList<>();
-        adressOfDepartments = adressOfDepartmentRepository.findAll();
-        return  adressOfDepartments;
+
+        return  adressOfDepartmentService.getAllAdressOfDepartments();
     }
 
     @GetMapping(value = "getAdressOfDepartmentById/{id}")
     public Optional<AdressOfDepartment> getAdressOfDepartmentById(@PathVariable Long id){
 
-        Optional<AdressOfDepartment> adressOfDepartment = adressOfDepartmentRepository.findById(id);
-        return  adressOfDepartment;
+
+        return  adressOfDepartmentService.getAdressOfDepartmentById(id);
     }
 
     @PostMapping(value = "createAdressOfDepartments")
     public void createAdressOfDepartments(@RequestBody AdressOfDepartment adressOfDepartment){
 
-        adressOfDepartmentRepository.save(adressOfDepartment);
-        logger.info("All records saved.");
+     adressOfDepartmentService.createAdressOfDepartments(adressOfDepartment);
     }
 
     @DeleteMapping(value = "deleteAdressOfDepartment/{id}")
     public void deleteAdressOfDepartment(@PathVariable Long id){
-        adressOfDepartmentRepository.deleteDepartmentsByAdressOfDepartment_Id(id);
-        adressOfDepartmentRepository.deleteById(id);
-        logger.info("Department delete.");
+       adressOfDepartmentService.deleteAdressOfDepartment(id);
+    }
+
+    @PutMapping(value = "updateAdressOfDepartment/{id}")
+    public void updateAdressOfDepartment(@PathVariable Long id, @RequestBody AdressOfDepartment adressOfDepartment){
+        adressOfDepartmentService.updateAdressOfDepartment(id,adressOfDepartment);
     }
 }

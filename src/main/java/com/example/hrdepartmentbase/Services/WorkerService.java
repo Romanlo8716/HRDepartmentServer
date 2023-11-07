@@ -29,4 +29,5 @@ public interface WorkerService {
 
    void recoveryWorker(Long id);
 
+   void updateWorker(Long id, Worker worker);
 }

@@ -111,4 +111,9 @@ public void dismissWorker(@PathVariable ("id") Long id){
         workerService.recoveryWorker(id);
     }
 
+
+    @PutMapping(value = "updateWorker/{id}")
+    public void updateWorker(@PathVariable ("id") Long id, @RequestBody Worker worker){
+        workerService.updateWorker(id, worker);
+    }
 }

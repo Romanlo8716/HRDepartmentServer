@@ -15,4 +15,5 @@ public interface AdressOfDepartmentRepository extends CrudRepository<AdressOfDep
     void deleteDepartmentsByAdressOfDepartment_Id(@Param("id") Long id);
 
 
+
 }

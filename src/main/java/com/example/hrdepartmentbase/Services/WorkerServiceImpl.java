@@ -1,6 +1,7 @@
 package com.example.hrdepartmentbase.Services;
 
 import com.example.hrdepartmentbase.Models.DepartmentsAndPostsOfWorker;
+import com.example.hrdepartmentbase.Models.Post;
 import com.example.hrdepartmentbase.Models.Worker;
 import com.example.hrdepartmentbase.Repository.DepartmentsAndPostsOfWorkerRepository;
 import com.example.hrdepartmentbase.Repository.WorkerRepository;
@@ -133,5 +134,42 @@ public class WorkerServiceImpl implements WorkerService {
         worker.setDismiss(false);
 
         workerRepository.save(worker);
+    }
+
+    @Override
+    public void updateWorker(Long id, Worker worker){
+        Worker workerUpdate = workerRepository.findById(id).orElseThrow(() -> new ExpressionException("Post not exist with id: " + id));
+
+        workerUpdate.setName(worker.getName());
+        workerUpdate.setSurname(worker.getSurname());
+        workerUpdate.setPatronymic(worker.getPatronymic());
+        workerUpdate.setDescriptionWorker(worker.getDescriptionWorker());
+        workerUpdate.setCity(worker.getCity());
+        workerUpdate.setCountChildren(worker.getCountChildren());
+        workerUpdate.setDateOfBirth(worker.getDateOfBirth());
+        workerUpdate.setDateOfIssue(worker.getDateOfIssue());
+        workerUpdate.setDivisionCode(worker.getDivisionCode());
+        workerUpdate.setEmail(worker.getEmail());
+        workerUpdate.setFamilyPosition(worker.getFamilyPosition());
+        workerUpdate.setGender(worker.getGender());
+        workerUpdate.setCountChildren(worker.getCountChildren());
+        workerUpdate.setHouse(worker.getHouse());
+        workerUpdate.setIssuedByWhom(worker.getIssuedByWhom());
+        workerUpdate.setMilitaryTitle(worker.getMilitaryTitle());
+        workerUpdate.setNameKomis(worker.getNameKomis());
+        workerUpdate.setNumberPass(worker.getNumberPass());
+        workerUpdate.setNumberSnils(worker.getNumberSnils());
+        workerUpdate.setPhone(worker.getPhone());
+        workerUpdate.setPhoto(worker.getPhoto());
+        workerUpdate.setProfile(worker.getProfile());
+        workerUpdate.setSeriesPass(worker.getSeriesPass());
+        workerUpdate.setShelfLife(worker.getShelfLife());
+        workerUpdate.setStockCategory(worker.getStockCategory());
+        workerUpdate.setStreet(worker.getStreet());
+        workerUpdate.setVus(worker.getVus());
+
+
+
+        workerRepository.save(workerUpdate);
     }
 }

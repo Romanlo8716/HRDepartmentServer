@@ -5,6 +5,7 @@ import com.example.hrdepartmentbase.Models.Post;
 import com.example.hrdepartmentbase.Models.Worker;
 import com.example.hrdepartmentbase.Repository.PostRepository;
 import com.example.hrdepartmentbase.Repository.WorkerRepository;
+import com.example.hrdepartmentbase.Services.PostService;
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,46 +25,38 @@ import java.util.Optional;
 public class PostController {
 
     private final static Logger logger = LoggerFactory.getLogger(WorkerController.class);
-    private PostRepository postRepository;
+    private PostService postService;
 
-    public PostController(PostRepository postRepository) {
-        this.postRepository = postRepository;
+    public PostController(PostService postService) {
+        this.postService = postService;
     }
 
     @GetMapping(value = "getPosts")
     public Iterable<Post> getAllPosts(){
 
-        Iterable<Post> posts = new ArrayList<>();
-        posts = postRepository.findAll();
-        return  posts;
+        return  postService.getAllPosts();
     }
 
     @GetMapping(value = "getPostById/{id}")
     public Optional<Post> getPostById(@PathVariable("id") Long id){
-        Optional<Post> post = postRepository.findById(id);
 
-        return post;
+
+        return postService.getPostById(id);
     }
 
     @PostMapping(value = "createPosts")
     public void createPosts(@RequestBody Post post){
-
-        postRepository.save(post);
-        logger.info("All records saved.");
+        postService.createPosts(post);
     }
 
     @DeleteMapping(value = "deletePost/{id}")
     public void deletePost(@PathVariable ("id") Long id){
-        postRepository.deleteDepartmentsAndPostsOfWorkersByPost_Id(id);
-        postRepository.deleteById(id);
+       postService.deletePost(id);
     }
 
     @PutMapping(value = "updatePost/{id}")
-    public Post updatePost(@PathVariable ("id") Long id, @RequestBody Post post){
-        Post postUpdate = postRepository.findById(id).orElseThrow(() -> new ExpressionException("Post not exist with id: " + id));
+    public void updatePost(@PathVariable ("id") Long id, @RequestBody Post post){
+     postService.updatePost(id, post);
 
-        postUpdate.setNamePost(post.getNamePost());
-
-        return postRepository.save(post);
     }
 }
