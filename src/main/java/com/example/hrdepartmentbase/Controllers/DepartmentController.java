@@ -2,6 +2,7 @@ package com.example.hrdepartmentbase.Controllers;
 
 import com.example.hrdepartmentbase.Models.Department;
 import com.example.hrdepartmentbase.Models.Post;
+import com.example.hrdepartmentbase.Models.PostsOfDepartment;
 import com.example.hrdepartmentbase.Repository.DepartmentRepository;
 import com.example.hrdepartmentbase.Repository.PostRepository;
 import com.example.hrdepartmentbase.Services.DepartmentService;
@@ -47,9 +48,35 @@ public class DepartmentController {
         departmentService.deleteDepartment(id);
     }
 
+    @DeleteMapping(value = "deletePostOfDepartment/{id}")
+    public void deletePostOfDepartment(@PathVariable Long id){
+        departmentService.deletePostOfDepartment(id);
+    }
+
     @PutMapping(value = "updateDepartment/{id}")
     public void updateDepartment(@PathVariable Long id, @RequestBody Department department){
         departmentService.updateDepartment(id,department);
+    }
+
+    @PutMapping(value = "updatePostOfDepartment/{id}")
+    public void updatePostOfDepartment(@PathVariable Long id, @RequestBody PostsOfDepartment postsOfDepartment){
+        departmentService.updatePostOfDepartment(id,postsOfDepartment);
+    }
+
+    @PostMapping(value = "createPostOnDepartment")
+    public void createPostOnDepartment(@RequestBody PostsOfDepartment postsOfDepartment){
+
+        departmentService.createPostOnDepartment(postsOfDepartment);
+    }
+
+    @GetMapping(value = "getPostOfDepartment")
+    public Iterable<PostsOfDepartment> getPostOfDepartment(){
+       return departmentService.getPostOfDepartment();
+    }
+
+    @GetMapping(value = "getPostOfDepartmentById/{id}")
+    public Optional<PostsOfDepartment> getPostOfDepartmentById(@PathVariable Long id){
+        return departmentService.getPostOfDepartmentById(id);
     }
 
 
