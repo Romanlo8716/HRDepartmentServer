@@ -7,10 +7,7 @@ import com.example.hrdepartmentbase.Repository.PostRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
@@ -43,6 +40,12 @@ public class DepartmentsAndPostsOfWorkerController {
     }
 
 
+    @GetMapping(value = "getDepartmentsAndPostsOfWorkerByDepartmentId/{id}")
+    public Iterable<DepartmentsAndPostsOfWorker> getDepartmentsAndPostsOfWorkerByDepartmentId(@PathVariable Long id){
+
+
+        return  departmentsAndPostsOfWorkerRepository.getDepartmentsAndPostsOfWorkerByDepartmentId(id);
+    }
 
 
 }

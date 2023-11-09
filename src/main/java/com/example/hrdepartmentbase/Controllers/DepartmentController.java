@@ -1,6 +1,7 @@
 package com.example.hrdepartmentbase.Controllers;
 
 import com.example.hrdepartmentbase.Models.Department;
+import com.example.hrdepartmentbase.Models.DepartmentsAndPostsOfWorker;
 import com.example.hrdepartmentbase.Models.Post;
 import com.example.hrdepartmentbase.Models.PostsOfDepartment;
 import com.example.hrdepartmentbase.Repository.DepartmentRepository;
@@ -74,9 +75,24 @@ public class DepartmentController {
        return departmentService.getPostOfDepartment();
     }
 
+    @GetMapping(value = "getPostOfDepartmentByDepartmentId/{id}")
+    public Iterable<PostsOfDepartment> getPostOfDepartmentByDepartmentId(@PathVariable Long id){
+        return departmentService.getPostOfDepartmentByDepartmentId(id);
+    }
+
     @GetMapping(value = "getPostOfDepartmentById/{id}")
     public Optional<PostsOfDepartment> getPostOfDepartmentById(@PathVariable Long id){
         return departmentService.getPostOfDepartmentById(id);
+    }
+
+    @PostMapping(value = "confirmWorkerOnDepartment")
+    public void createAddWorkerOnDepartment(@RequestBody DepartmentsAndPostsOfWorker departmentsAndPostsOfWorker){
+        departmentService.createAddWorkerOnDepartment(departmentsAndPostsOfWorker);
+    }
+
+    @GetMapping(value = "getWorkerOnDepartmentByDepartmentId/{id}")
+    public Iterable<DepartmentsAndPostsOfWorker> getWorkersOnDepartment(@PathVariable Long id){
+        return departmentService.getWorkersOnDepartment(id);
     }
 
 

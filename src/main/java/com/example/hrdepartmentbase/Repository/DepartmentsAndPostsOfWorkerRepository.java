@@ -16,5 +16,5 @@ public interface DepartmentsAndPostsOfWorkerRepository extends CrudRepository<De
     Iterable<DepartmentsAndPostsOfWorker> groupByDepartment();
 
 
-
+    Iterable<DepartmentsAndPostsOfWorker> getDepartmentsAndPostsOfWorkerByDepartmentId(Long id);
 }

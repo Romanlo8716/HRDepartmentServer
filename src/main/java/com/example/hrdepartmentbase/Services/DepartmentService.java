@@ -1,6 +1,7 @@
 package com.example.hrdepartmentbase.Services;
 
 import com.example.hrdepartmentbase.Models.Department;
+import com.example.hrdepartmentbase.Models.DepartmentsAndPostsOfWorker;
 import com.example.hrdepartmentbase.Models.PostsOfDepartment;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,7 +25,13 @@ public interface DepartmentService {
 
     Iterable<PostsOfDepartment> getPostOfDepartment();
 
+    Iterable<PostsOfDepartment> getPostOfDepartmentByDepartmentId(Long id);
+
     Optional<PostsOfDepartment> getPostOfDepartmentById(Long id);
 
     void updatePostOfDepartment(Long id, PostsOfDepartment postsOfDepartment);
+
+    void createAddWorkerOnDepartment(DepartmentsAndPostsOfWorker departmentsAndPostsOfWorker);
+
+    Iterable<DepartmentsAndPostsOfWorker> getWorkersOnDepartment(Long id);
 }

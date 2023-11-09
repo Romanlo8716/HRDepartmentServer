@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PostOfDepartmentRepository extends CrudRepository<PostsOfDepartment, Long> {
+
+    Iterable<PostsOfDepartment> getPostsOfDepartmentsByDepartment_Id(Long id);
 }

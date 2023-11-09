@@ -2,9 +2,11 @@ package com.example.hrdepartmentbase.Services;
 
 import com.example.hrdepartmentbase.Controllers.WorkerController;
 import com.example.hrdepartmentbase.Models.Department;
+import com.example.hrdepartmentbase.Models.DepartmentsAndPostsOfWorker;
 import com.example.hrdepartmentbase.Models.Post;
 import com.example.hrdepartmentbase.Models.PostsOfDepartment;
 import com.example.hrdepartmentbase.Repository.DepartmentRepository;
+import com.example.hrdepartmentbase.Repository.DepartmentsAndPostsOfWorkerRepository;
 import com.example.hrdepartmentbase.Repository.PostOfDepartmentRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,9 +22,12 @@ public class DepartmentServiceImpl implements DepartmentService{
     private DepartmentRepository departmentRepository;
     private PostOfDepartmentRepository postOfDepartmentRepository;
 
-    public DepartmentServiceImpl(DepartmentRepository departmentRepository, PostOfDepartmentRepository postOfDepartmentRepository) {
+    private DepartmentsAndPostsOfWorkerRepository departmentsAndPostsOfWorkerRepository;
+
+    public DepartmentServiceImpl(DepartmentRepository departmentRepository, PostOfDepartmentRepository postOfDepartmentRepository, DepartmentsAndPostsOfWorkerRepository departmentsAndPostsOfWorkerRepository) {
         this.departmentRepository = departmentRepository;
         this.postOfDepartmentRepository = postOfDepartmentRepository;
+        this.departmentsAndPostsOfWorkerRepository = departmentsAndPostsOfWorkerRepository;
     }
 
     @Override
@@ -92,7 +97,22 @@ public class DepartmentServiceImpl implements DepartmentService{
     }
 
     @Override
+    public Iterable<PostsOfDepartment>getPostOfDepartmentByDepartmentId(Long id){
+        return postOfDepartmentRepository.getPostsOfDepartmentsByDepartment_Id(id);
+    }
+
+    @Override
     public Optional<PostsOfDepartment> getPostOfDepartmentById(Long id){
         return  postOfDepartmentRepository.findById(id);
+    }
+
+    @Override
+    public void createAddWorkerOnDepartment(DepartmentsAndPostsOfWorker departmentsAndPostsOfWorker){
+        departmentsAndPostsOfWorkerRepository.save(departmentsAndPostsOfWorker);
+    }
+
+    @Override
+    public Iterable<DepartmentsAndPostsOfWorker> getWorkersOnDepartment(Long id){
+       return departmentsAndPostsOfWorkerRepository.getDepartmentsAndPostsOfWorkerByDepartmentId(id);
     }
 }
