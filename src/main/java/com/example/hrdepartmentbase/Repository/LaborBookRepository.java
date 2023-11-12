@@ -1,4 +1,7 @@
 package com.example.hrdepartmentbase.Repository;
 
-public interface LaborBookRepository {
+import com.example.hrdepartmentbase.Models.LaborBook;
+import org.springframework.data.repository.CrudRepository;
+
+public interface LaborBookRepository extends CrudRepository<LaborBook, Long> {
 }

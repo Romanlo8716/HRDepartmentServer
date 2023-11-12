@@ -14,6 +14,7 @@ import java.util.List;
 public class Education {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(length = 6, nullable = false)

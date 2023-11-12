@@ -1,6 +1,7 @@
 package com.example.hrdepartmentbase.Services;
 
 import com.example.hrdepartmentbase.Models.DepartmentsAndPostsOfWorker;
+import com.example.hrdepartmentbase.Models.LaborBook;
 import com.example.hrdepartmentbase.Models.Post;
 import com.example.hrdepartmentbase.Models.Worker;
 import com.example.hrdepartmentbase.Repository.DepartmentsAndPostsOfWorkerRepository;
@@ -15,6 +16,8 @@ public class WorkerServiceImpl implements WorkerService {
 
     private WorkerRepository workerRepository;
     private DepartmentsAndPostsOfWorkerRepository departmentsAndPostsOfWorkerRepository;
+
+
 
     public WorkerServiceImpl(WorkerRepository workerRepository, DepartmentsAndPostsOfWorkerRepository departmentsAndPostsOfWorkerRepository) {
         this.workerRepository = workerRepository;
@@ -172,4 +175,22 @@ public class WorkerServiceImpl implements WorkerService {
 
         workerRepository.save(workerUpdate);
     }
+
+    @Override
+    public void addMilitary(Long id, Worker worker) {
+        Worker workerUpdate = workerRepository.findById(id).orElseThrow(() -> new ExpressionException("Post not exist with id: " + id));
+
+        workerUpdate.setMilitaryTitle(worker.getMilitaryTitle());
+        workerUpdate.setNameKomis(worker.getNameKomis());
+        workerUpdate.setProfile(worker.getProfile());
+        workerUpdate.setShelfLife(worker.getShelfLife());
+        workerUpdate.setStockCategory(worker.getStockCategory());
+        workerUpdate.setVus(worker.getVus());
+
+        workerRepository.save(workerUpdate);
+    }
+
+
+
+
 }

@@ -116,4 +116,12 @@ public void dismissWorker(@PathVariable ("id") Long id){
     public void updateWorker(@PathVariable ("id") Long id, @RequestBody Worker worker){
         workerService.updateWorker(id, worker);
     }
+
+    @PutMapping(value = "addMilitary/{id}")
+    public void addMilitary(@PathVariable ("id") Long id, @RequestBody Worker worker){
+
+        workerService.addMilitary(id, worker);
+    }
+
+
 }
